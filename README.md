@@ -2,14 +2,6 @@
 
 Esta es una página de pruebas de contenedores y CICD.
 
-
-1. servidor Bun JS
-2. HTML estático
-3. botón de prueba, al dar click cambia el texto el servidor responde con un mensaje y la versión del servidor
-4. el fondo de pantalla una variable default azul en el servidor, pero puede ser cambiada a través de una variable de entorno
-5. la apliacion es contenerizada usando Dockerfile
-
-
 ## Instrucciones
 ### Docker
 ```bash
@@ -18,4 +10,15 @@ docker build -t demo-public-page:v1.0.0 .
 # run the image
 docker run -p 3000:3000 demo-public-page:v1.0.0
 ```
+
+
+# Variables de entorno
+
+El servidor soporta las siguientes variables de entorno para su configuración:
+
+| Variable   | Descripción                                            | Valor por defecto         |
+| :--------- | :----------------------------------------------------- | :------------------------ |
+| `BG_COLOR` | Color de fondo personalizado de la página              | `#030712`                 |
+| `VERSION`  | Versión de la aplicación expuesta en la API y el modal | Versión de `package.json` |
+| `PORT`     | Puerto en el que escucha el servidor Bun               | `3000`                    |
 

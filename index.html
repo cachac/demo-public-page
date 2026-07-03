@@ -336,23 +336,28 @@
         z-index: 1;
       }
 
-      /* Glowing gradient border */
+      /* Big multi-color gradient blur behind the card (no border outline, isolated outside) */
       .modal-box::before {
         content: '';
         position: absolute;
-        inset: -2px; /* Acts as a 2px border */
-        border-radius: 30px;
+        inset: -150px; /* Large inset to prevent the blur from hitting the element boundaries and clipping */
+        border-radius: 178px; /* Card radius (28px) + inset (150px) */
         background: linear-gradient(135deg, #00f2fe, #4facfe, #9b51e0, #f857a6);
+        background-position: center;
+        background-size: calc(100% - 300px) calc(100% - 300px); /* Restrict gradient to the card area */
+        background-repeat: no-repeat;
         z-index: -1;
         pointer-events: none;
+        filter: blur(80px); /* Soft, very blurred gradient glow */
+        opacity: 0.8;
+        
+        /* Exclude the modal card area so the blur only renders outside the card */
+        padding: 150px; /* Matches the inset to align content-box with card edge */
         -webkit-mask: 
           linear-gradient(#fff 0 0) content-box, 
           linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
                 mask-composite: exclude;
-        padding: 2px;
-        filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.55)) 
-                drop-shadow(0 0 12px rgba(248, 87, 166, 0.45));
       }
 
       .modal-box h2{

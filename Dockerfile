@@ -1,5 +1,5 @@
 # Use official Bun image
-FROM jarredsumner/bun:latest
+FROM oven/bun:1
 WORKDIR /app
 COPY package.json .
 COPY index.html .

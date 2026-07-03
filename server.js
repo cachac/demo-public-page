@@ -1,8 +1,9 @@
 // Bun server serving the Aurora proposal page
 // Background color can be set via env variable BG_COLOR (default #030712)
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { resolve, dirname } from "path";
+import { hostname } from "os";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,9 +14,22 @@ const pkgVersion = JSON.parse(
 ).version;
 const version = process.env.VERSION || pkgVersion;
 
-// Preload HTML and inject background color
+const isInsideContainer = () => {
+  if (process.env.container) return true;
+  try {
+    if (existsSync("/.dockerenv") || existsSync("/.containerenv")) return true;
+    const cgroup = readFileSync("/proc/self/cgroup", "utf8");
+    return cgroup.includes("docker") || cgroup.includes("kubepods") || cgroup.includes("containerd");
+  } catch {
+    return false;
+  }
+};
+const containerId = isInsideContainer() ? hostname() : "LOCAL";
+
+// Preload HTML and inject background color and container ID
 let rawHtml = readFileSync(resolve(__dirname, "index.html"), "utf8");
 rawHtml = rawHtml.replace("{{BG_COLOR}}", bgColor);
+rawHtml = rawHtml.replace("{{CONTAINER_ID}}", containerId);
 
 Bun.serve({
   port: Number(process.env.PORT) || 3000,

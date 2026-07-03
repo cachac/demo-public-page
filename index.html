@@ -125,6 +125,52 @@
         line-height:1.6;
       }
 
+      .container-id-banner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0.85rem 1.75rem;
+        background: rgba(13, 16, 27, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        max-width: 480px;
+        width: 100%;
+        margin: 0 auto;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                    0 0 20px rgba(0, 242, 254, 0.1);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .container-id-banner:hover {
+        border-color: rgba(0, 242, 254, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 
+                    0 0 25px rgba(0, 242, 254, 0.25);
+        transform: translateY(-2px);
+      }
+
+      .banner-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #9ca3af;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .banner-value {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #00f2fe, #4facfe);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 0.02em;
+        text-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+      }
+
       .grid{
         display:grid;
         gap:2rem;
@@ -274,16 +320,47 @@
       }
 
       .modal-box{
-        background: rgba(13, 16, 27, 0.85);
+        position: relative;
+        background: rgba(13, 16, 27, 0.92);
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: none;
         border-radius: 28px;
         padding: 2.5rem 3rem;
         max-width: 400px;
         width: 90vw;
         text-align: center;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(167, 139, 250, 0.25);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+        z-index: 1;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .modal-box:hover{
+        transform: scale(1.04) translateY(-2px);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 
+                    0 6px 25px rgba(248, 87, 166, 0.45), 
+                    0 0 30px rgba(79, 172, 254, 0.4);
+      }
+
+      /* Glowing gradient border */
+      .modal-box::before {
+        content: '';
+        position: absolute;
+        inset: -2px; /* Acts as a 2px border */
+        border-radius: 30px;
+        background: linear-gradient(135deg, #00f2fe, #4facfe, #9b51e0, #f857a6);
+        background-size: 200% 200%;
+        z-index: -1;
+        pointer-events: none;
+        -webkit-mask: 
+          linear-gradient(#fff 0 0) content-box, 
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+                mask-composite: exclude;
+        padding: 2px;
+        filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.45)) 
+                drop-shadow(0 0 8px rgba(248, 87, 166, 0.35));
+        animation: gradientShift 6s ease infinite;
       }
 
       .modal-box h2{
@@ -321,6 +398,11 @@
         <h1>PÁGINA DE PRUEBAS</h1>
         <p class="subtitle">Pruebas de contenedores y CICD.</p>
       </header>
+
+      <div class="container-id-banner">
+        <span class="banner-label">CONTAINER ID:</span>
+        <span class="banner-value">{{CONTAINER_ID}}</span>
+      </div>
 
       <main class="grid">
         <article

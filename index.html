@@ -330,16 +330,10 @@
         max-width: 400px;
         width: 90vw;
         text-align: center;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65),
+                    0 0 45px rgba(0, 242, 254, 0.3),
+                    0 0 25px rgba(248, 87, 166, 0.2);
         z-index: 1;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .modal-box:hover{
-        transform: scale(1.04) translateY(-2px);
-        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 
-                    0 6px 25px rgba(248, 87, 166, 0.45), 
-                    0 0 30px rgba(79, 172, 254, 0.4);
       }
 
       /* Glowing gradient border */
@@ -349,7 +343,6 @@
         inset: -2px; /* Acts as a 2px border */
         border-radius: 30px;
         background: linear-gradient(135deg, #00f2fe, #4facfe, #9b51e0, #f857a6);
-        background-size: 200% 200%;
         z-index: -1;
         pointer-events: none;
         -webkit-mask: 
@@ -358,9 +351,8 @@
         -webkit-mask-composite: xor;
                 mask-composite: exclude;
         padding: 2px;
-        filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.45)) 
-                drop-shadow(0 0 8px rgba(248, 87, 166, 0.35));
-        animation: gradientShift 6s ease infinite;
+        filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.55)) 
+                drop-shadow(0 0 12px rgba(248, 87, 166, 0.45));
       }
 
       .modal-box h2{

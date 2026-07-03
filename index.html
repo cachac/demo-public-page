@@ -21,7 +21,9 @@
         height:100%;
         font-family:'Plus Jakarta Sans',sans-serif;
         color:#f3f4f6;
-        background: var(--bg-color, #030712);
+        background-color: var(--bg-color, #030712);
+        background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 24px 24px;
         overflow-x:hidden;
         position: relative;
       }
@@ -139,14 +141,14 @@
         margin: 0 auto;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
                     0 0 20px rgba(0, 242, 254, 0.1);
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       .container-id-banner:hover {
         border-color: rgba(0, 242, 254, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
                     0 0 25px rgba(0, 242, 254, 0.25);
         transform: translateY(-2px);
       }
@@ -364,15 +366,15 @@
         z-index: -1;
         pointer-events: none;
         opacity: 0.8;
-        
+
         /* Exclude the modal card area so the blur only renders outside the card */
         padding: 150px; /* Matches the inset to align content-box with card edge */
-        -webkit-mask: 
-          linear-gradient(#fff 0 0) content-box, 
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
           linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
                 mask-composite: exclude;
-        
+
         /* Aurora Borealis wavy shift animation */
         animation: aurora 12s infinite ease-in-out;
       }

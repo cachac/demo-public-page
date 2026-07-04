@@ -8,18 +8,25 @@ import { hostname } from "os";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const bgColor = process.env.BG_COLOR || "#030712";
+const bgColor = Bun.env.BG_COLOR || "#030712";
 const pkgVersion = JSON.parse(
   readFileSync(resolve(__dirname, "package.json"), "utf8"),
 ).version;
-const version = process.env.VERSION || pkgVersion;
+const version = Bun.env.VERSION || pkgVersion;
+
+console.log("Version: ", version);
+console.log("BgColor: ", bgColor);
+console.log("Port: ", Bun.env.PORT);
 
 const isInsideContainer = () => {
-  if (process.env.container) return true;
   try {
     if (existsSync("/.dockerenv") || existsSync("/.containerenv")) return true;
     const cgroup = readFileSync("/proc/self/cgroup", "utf8");
-    return cgroup.includes("docker") || cgroup.includes("kubepods") || cgroup.includes("containerd");
+    return (
+      cgroup.includes("docker") ||
+      cgroup.includes("kubepods") ||
+      cgroup.includes("containerd")
+    );
   } catch {
     return false;
   }
@@ -32,20 +39,20 @@ rawHtml = rawHtml.replace("{{BG_COLOR}}", bgColor);
 rawHtml = rawHtml.replace("{{CONTAINER_ID}}", containerId);
 
 Bun.serve({
-  port: Number(process.env.PORT) || 3000,
+  port: Number(Bun.env.PORT) || 3000,
   async fetch(req) {
     const url = new URL(req.url);
-      if (url.pathname === "/api/ping") {
-        const payload = { message: "¡Conexión exitosa!", version };
-        return new Response(JSON.stringify(payload), {
-          headers: { "Content-Type": "application/json" },
-        });
-      } else if (url.pathname === "/api/version") {
-        const payload = { version };
-        return new Response(JSON.stringify(payload), {
-          headers: { "Content-Type": "application/json" },
-        });
-      }
+    if (url.pathname === "/api/ping") {
+      const payload = { message: "¡Conexión exitosa!", version };
+      return new Response(JSON.stringify(payload), {
+        headers: { "Content-Type": "application/json" },
+      });
+    } else if (url.pathname === "/api/version") {
+      const payload = { version };
+      return new Response(JSON.stringify(payload), {
+        headers: { "Content-Type": "application/json" },
+      });
+    }
     // Serve index.html for any other request
     return new Response(rawHtml, {
       headers: { "Content-Type": "text/html; charset=utf-8" },
@@ -53,6 +60,4 @@ Bun.serve({
   },
 });
 
-console.log(
-  `🚀 Server listening on http://localhost:${process.env.PORT || 3000}`,
-);
+console.log(`🚀 Server listening on http://localhost:${Bun.env.PORT || 3000}`);

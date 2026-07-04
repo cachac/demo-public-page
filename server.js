@@ -1,5 +1,5 @@
 // Bun server serving the Aurora proposal page
-// Background color can be set via env variable BG_COLOR (default #030712)
+// Background color can be set via env variable BG_COLOR (default #030712c3)
 import { readFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { resolve, dirname } from "path";

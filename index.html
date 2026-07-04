@@ -297,6 +297,7 @@
 
       /* Native Dialog Modal Styling */
       dialog.modal-dialog {
+        position: relative;
         border: none;
         background: transparent;
         padding: 0;
@@ -347,38 +348,25 @@
         max-width: 400px;
         width: 90vw;
         text-align: center;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65),
-                    0 0 45px rgba(0, 242, 254, 0.3),
-                    0 0 25px rgba(248, 87, 166, 0.2);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
         z-index: 1;
       }
 
-      /* Big multi-color gradient blur behind the card (no border outline, isolated outside) */
-      .modal-box::before {
+      /* Big multi-color gradient blur behind the card (no sharp halo outline) */
+      .modal-glow {
         content: '';
         position: absolute;
-        inset: -150px; /* Large inset to prevent the blur from hitting the element boundaries and clipping */
-        border-radius: 178px; /* Card radius (28px) + inset (150px) */
+        inset: -60px;
+        border-radius: 50%;
         background: linear-gradient(135deg, #00f2fe, #4facfe, #9b51e0, #f857a6);
-        background-position: center;
-        background-size: calc(100% - 300px) calc(100% - 300px); /* Restrict gradient to the card area */
-        background-repeat: no-repeat;
-        z-index: -1;
+        z-index: 0;
         pointer-events: none;
-        opacity: 0;
-
-        /* Exclude the modal card area so the blur only renders outside the card */
-        padding: 150px; /* Matches the inset to align content-box with card edge */
-        -webkit-mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-                mask-composite: exclude;
+        opacity: 0.65;
+        filter: blur(80px);
 
         /* Aurora Borealis wavy shift animation */
         animation: aurora 12s infinite ease-in-out;
       }
-
       .modal-box h2{
         font-family:'Outfit',sans-serif;
         font-size:1.4rem;
@@ -446,6 +434,7 @@
       closedby="any"
       aria-labelledby="modalTitle"
     >
+      <div class="modal-glow"></div>
       <div class="modal-box">
         <h2 id="modalTitle">Versión del Servidor</h2>
         <p class="ver" id="modalVersion">Cargando...</p>
